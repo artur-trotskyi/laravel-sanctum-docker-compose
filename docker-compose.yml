@@ -27,32 +27,32 @@ services:
       XDEBUG_CONFIG: "client_host=host.docker.internal remote_port=9003"
     extra_hosts:
       - "host.docker.internal:host-gateway"
-#  database:
-#    image: mysql:8.0.41
-#    container_name: "${COMPOSE_PROJECT_NAME}-mysql"
-#    restart: "always"
-#    ports:
-#      - "127.0.0.1:${HOST_MACHINE_MYSQL_PORT}:3306"
-#    volumes:
-#      - ./config/initdb:/docker-entrypoint-initdb.d
-#      - ./data/mysql:/var/lib/mysql
-#      - ./logs/mysql:/var/log/mysql
-#    environment:
-#      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-#      MYSQL_DATABASE: ${MYSQL_DATABASE}
-#      MYSQL_USER: ${MYSQL_USER}
-#      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
   database:
-    image: mongo:7.0.16
-    container_name: "${COMPOSE_PROJECT_NAME}-mongo"
+    image: mysql:8.0.41
+    container_name: "${COMPOSE_PROJECT_NAME}-mysql"
     restart: "always"
     ports:
-      - "127.0.0.1:${HOST_MACHINE_MONGO_PORT}:27017"
+      - "127.0.0.1:${HOST_MACHINE_MYSQL_PORT}:3306"
     volumes:
-      - ./data/mongo:/data/db
+      - ./config/initdb:/docker-entrypoint-initdb.d
+      - ./data/mysql:/var/lib/mysql
+      - ./logs/mysql:/var/log/mysql
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+#  database:
+#    image: mongo:7.0.16
+#    container_name: "${COMPOSE_PROJECT_NAME}-mongo"
+#    restart: "always"
+#    ports:
+#      - "127.0.0.1:${HOST_MACHINE_MONGO_PORT}:27017"
+#    volumes:
+#      - ./data/mongo:/data/db
+#    environment:
+#      MONGO_INITDB_ROOT_USERNAME: ${MONGO_INITDB_ROOT_USERNAME}
+#      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_INITDB_ROOT_PASSWORD}
   redis:
     container_name: "${COMPOSE_PROJECT_NAME}-redis"
     image: redis:7.4.2
